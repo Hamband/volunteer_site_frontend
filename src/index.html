@@ -29,7 +29,7 @@
 
             <label for="last_name" data-required="true">نام خانوادگی</label>
             <input type="text" name="last_name" id="last_name" placeholder="نام خانوادگی" required>
-
+            <div></div>
             <label for="last_completed_degree">آخرین مدرک تحصیلی</label>
             <select name="last_completed_degree" id="last_completed_degree" required>
                 <option value="DIPLOMA" selected>دیپلم</option>
@@ -62,7 +62,7 @@
             <legend>راه‌های ارتباط</legend>
             <span id="contact-add" onclick="addContactInput()" class="pointer plus-button">افزودن</span>
         </fieldset>
-        <fieldset>
+        <fieldset id="submit">
             <input type="button" value="ارسال" onclick="handleSubmitPress()">
         </fieldset>
     </form>
@@ -70,5 +70,14 @@
         <p>با تشکر، اطلاعات شما با موفقیت ثبت شد.</p>
     </div>
 </main>
+<section class="footer">
+این صفحه متعلق به
+<a href="https://hamband.math.sharif.edu">انجمن علمی همبند</a>
+است. برای ارتباط با انجمن، از طریق ایمیل
+<pre>math.se.group[at]gmail[dot]com</pre>
+و یا اکانت تلگرام
+<pre>Hamband[underscore]Admin</pre>
+اقدام کنید.
+</section>
 </body>
 </html>

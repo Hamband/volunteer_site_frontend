@@ -178,6 +178,10 @@ function addDegreeInput() {
     d.appendChild(dl3);
     }
     {
+    var div = document.createElement("div");
+    d.appendChild(div);
+    }
+    {
     var l4 = document.createElement("label");
     l4.setAttribute("for", "degree-" + curIdx + "-start_year");
     l4.innerText = "سال شروع";
@@ -279,7 +283,7 @@ function addContactInput() {
     var sp = document.createElement("span");
     sp.classList.add("pointer");
     sp.classList.add("minus-button");
-    sp.setAttribute("onclick", "removeDegreeInput(" + curIdx + ")");
+    sp.setAttribute("onclick", "removeContactInput(" + curIdx + ")");
     sp.innerText = "حذف";
     d.appendChild(sp);
     }
