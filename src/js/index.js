@@ -86,6 +86,7 @@ function addFieldInput() {
     i1.type = "text";
     i1.dataset["completionType"] = "fields";
     i1.setAttribute("oninput", "invokeCompletion()");
+    i1.setAttribute("onfocus", "invokeCompletion()");
     i1.name = "field-" + curIdx;
     i1.id = "field-" + curIdx;
     i1.required = true;
@@ -146,6 +147,7 @@ function addDegreeInput() {
     i2.dataset["completionType"] = "degrees/uni";
     i2.required = true;
     i2.setAttribute("oninput", "invokeCompletion()");
+    i2.setAttribute("onfocus", "invokeCompletion()");
     i2.setAttribute("list", "degree-" + curIdx + "-uni-dl");
     var dl2 = document.createElement("datalist");
     dl2.id = "degree-" + curIdx + "-uni-dl";
@@ -166,6 +168,7 @@ function addDegreeInput() {
     i3.dataset["completionType"] = "degrees/major";
     i3.required = true;
     i3.setAttribute("oninput", "invokeCompletion()");
+    i3.setAttribute("onfocus", "invokeCompletion()");
     i3.setAttribute("list", "degree-" + curIdx + "-major-dl");
     var dl3 = document.createElement("datalist");
     dl3.id = "degree-" + curIdx + "-major-dl";
@@ -244,6 +247,7 @@ function addContactInput() {
         i1.dataset["completionType"] = "contacts/type";
         i1.setAttribute("list", "contact-" + curIdx + "-type-dl");
         i1.setAttribute("oninput", "invokeCompletion()");
+        i1.setAttribute("onfocus", "invokeCompletion()");
         i1.required = true;
         if (curIdx == 1) {
             i1.value = "email";
@@ -302,11 +306,16 @@ async function handleSubmitPress() {
     var jsonData = JSON.stringify(buildDataJson());
     var queryUrl = "/new";
     var response = await performPutRequest(queryUrl, jsonData);
-    if (response["status"] == "new_ok") {
-        handleSubmissionSuccess();
+    try {
+        if (response["status"] == "new_ok") {
+            handleSubmissionSuccess();
+        }
+        else {
+            handleSubmissionError(response["status"]);
+        }
     }
-    else {
-        handleSubmissionError();
+    catch (e) {
+        handleSubmissionError(e);
     }
 }
 
@@ -373,6 +382,15 @@ function appendContactsJson(obj) {
     }
     obj["contacts"] = fobj;
     return obj;
+}
+
+function handleSubmissionSuccess() {
+    document.getElementById("reg-form").classList.add("hidden");
+    document.getElementById("success").classList.remove("hidden");
+}
+
+function handleSubmissionError(msg) {
+    window.alert("ثبت اطلاعات شما با خطا مواجه شد. اطلاعات شما ثبت نشده‌است. اگر از صحت آن‌ها مطمئنید، دوباره تلاش کنید. کد خطا: " + msg);
 }
 
 onLoad();

@@ -88,3 +88,7 @@ label[data-required]::after {
 	content: " *";
 	color: rgba(230, 0, 0, 0.7);
 }
+
+.hidden {
+    display: none !important;
+}
