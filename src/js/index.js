@@ -50,32 +50,38 @@ function addFieldInput() {
     var lastIdx = fs.dataset["lastIdx"];
     var curIdx = parseInt(lastIdx) + 1;
     fs.dataset["lastIdx"] = curIdx;
-    var newEl = document.createElement("div");
+    var d = document.createElement("div");
 
-    var newElI = document.createElement("input");
-    newElI.type = "text";
-    newElI.dataset["completionType"] = "fields";
-    newElI.setAttribute("oninput", "invokeCompletion()");
-    newElI.name = "field-" + curIdx;
-    newElI.id = "field-" + curIdx;
-    newElI.required = true;
+    var l1 = document.createElement("label");
+    l1.setAttribute("for", "field-" + curIdx);
+    l1.dataset["required"] = "true";
+    l1.innerText = "نام زمینه";
+
+    var i1 = document.createElement("input");
+    i1.type = "text";
+    i1.dataset["completionType"] = "fields";
+    i1.setAttribute("oninput", "invokeCompletion()");
+    i1.name = "field-" + curIdx;
+    i1.id = "field-" + curIdx;
+    i1.required = true;
 
 
-    var newElD = document.createElement("datalist");
-    newElD.id = "field-" + curIdx + "-dl";
+    var dl1 = document.createElement("datalist");
+    dl1.id = "field-" + curIdx + "-dl";
 
-    newElI.setAttribute("list", "field-" + curIdx + "-dl");
+    i1.setAttribute("list", "field-" + curIdx + "-dl");
 
-    var newElR = document.createElement("span");
-    newElR.classList.add("pointer");
-    newElR.classList.add("minus-button");
-    newElR.setAttribute("onclick", "removeFieldInput(" + curIdx + ")");
-    newElR.innerText = "حذف";
+    var sp = document.createElement("span");
+    sp.classList.add("pointer");
+    sp.classList.add("minus-button");
+    sp.setAttribute("onclick", "removeFieldInput(" + curIdx + ")");
+    sp.innerText = "حذف";
 
-    newEl.appendChild(newElI);
-    newEl.appendChild(newElD);
-    newEl.appendChild(newElR);
-    document.getElementById("field-add").before(newEl);
+    d.appendChild(l1);
+    d.appendChild(i1);
+    d.appendChild(dl1);
+    d.appendChild(sp);
+    document.getElementById("field-add").before(d);
 }
 
 function removeFieldInput(idx) {
@@ -107,6 +113,7 @@ function addDegreeInput() {
     var l2 = document.createElement("label");
     l2.setAttribute("for", "degree-" + curIdx + "-uni");
     l2.innerText = "دانشگاه";
+    l2.dataset["required"] = "true";
     var i2 = document.createElement("input");
     i2.type = "text";
     i2.name = "degree-" + curIdx + "-uni";
@@ -126,6 +133,7 @@ function addDegreeInput() {
     var l3 = document.createElement("label");
     l3.setAttribute("for", "degree-" + curIdx + "-major");
     l3.innerText = "رشته";
+    l3.dataset["required"] = "true";
     var i3 = document.createElement("input");
     i3.type = "text";
     i3.name = "degree-" + curIdx + "-major";
@@ -145,6 +153,7 @@ function addDegreeInput() {
     var l4 = document.createElement("label");
     l4.setAttribute("for", "degree-" + curIdx + "-start");
     l4.innerText = "سال شروع";
+    l4.dataset["required"] = "true";
     var i4 = document.createElement("input");
     i4.type = "text";
     i4.name = "degree-" + curIdx + "-start";
@@ -161,6 +170,7 @@ function addDegreeInput() {
     var l5 = document.createElement("label");
     l5.setAttribute("for", "degree-" + curIdx + "-end");
     l5.innerText = "سال پایان (احتمالی)";
+    l5.dataset["required"] = "true";
     var i5 = document.createElement("input");
     i5.type = "text";
     i5.name = "degree-" + curIdx + "-end";
@@ -189,9 +199,73 @@ function removeDegreeInput(idx) {
     el.parentElement.removeChild(el);
 }
 
+function addContactInput() {
+    var fs = document.getElementById("contacts");
+    var lastIdx = fs.dataset["lastIdx"];
+    var curIdx = parseInt(lastIdx) + 1;
+    fs.dataset["lastIdx"] = curIdx;
+
+    var d = document.createElement("div");
+    {
+        var l1 = document.createElement("label");
+        l1.setAttribute("for", "contact-" + curIdx + "-type");
+        l1.innerText = "نوع";
+        l1.dataset["required"] = "true";
+
+        var i1 = document.createElement("input");
+        i1.type = "text";
+        i1.name = "contact-" + curIdx + "-type";
+        i1.id = "contact-" + curIdx + "-type";
+        i1.dataset["completionType"] = "contacts/type";
+        i1.setAttribute("list", "contact-" + curIdx + "-type-dl");
+        i1.setAttribute("oninput", "invokeCompletion()");
+        i1.required = true;
+        if (curIdx == 1) {
+            i1.value = "email";
+        }
+
+        var dl1 = document.createElement("datalist");
+        dl1.id = "contact-" + curIdx + "-type-dl";
+
+        d.appendChild(l1);
+        d.appendChild(i1);
+        d.appendChild(dl1);
+    }
+    {
+        var l2 = document.createElement("label");
+        l2.setAttribute("for", "contact-" + curIdx + "-address");
+        l2.innerText = "آدرس";
+        l2.dataset["required"] = "true";
+
+        var i2 = document.createElement("input");
+        i2.type = "text";
+        i2.name = "contact-" + curIdx + "-address";
+        i2.id = "contact-" + curIdx + "-address";
+        i2.required = true;
+
+        d.appendChild(l2);
+        d.appendChild(i2);
+    }
+    if (curIdx != 1) {
+    var sp = document.createElement("span");
+    sp.classList.add("pointer");
+    sp.classList.add("minus-button");
+    sp.setAttribute("onclick", "removeDegreeInput(" + curIdx + ")");
+    sp.innerText = "حذف";
+    d.appendChild(sp);
+    }
+    document.getElementById("contact-add").before(d);
+}
+
+function removeDegreeInput(idx) {
+    var el = document.getElementById("contact-" + idx + "-type").parentElement;
+    el.parentElement.removeChild(el);
+}
+
 function onLoad() {
     addFieldInput();
     addDegreeInput();
+    addContactInput();
 }
 
 onLoad();

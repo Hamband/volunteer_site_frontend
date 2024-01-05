@@ -24,10 +24,10 @@
     <form id="reg-form">
         <fieldset>
             <legend>مشخصات شما</legend>
-            <label for="first_name">نام</label>
+            <label for="first_name" data-required="true">نام</label>
             <input type="text" name="first_name" id="first_name" placeholder="نام" autofocus required>
 
-            <label for="last_name">نام خانوادگی</label>
+            <label for="last_name" data-required="true">نام خانوادگی</label>
             <input type="text" name="last_name" id="last_name" placeholder="نام خانوادگی" autofocus required>
 
             <label for="last_completed_degree">آخرین مدرک تحصیلی</label>
@@ -58,16 +58,9 @@
             <legend>دوره‌های تحصیلی</legend>
             <span id="degree-add" onclick="addDegreeInput()" class="pointer plus-button">افزودن</span>
         </fieldset>
-        <fieldset id="contacts" data-last-idx="1">
+        <fieldset id="contacts" data-last-idx="0">
             <legend>راه‌های ارتباط</legend>
-            <div>
-                <label for="contact-1-type">نوع</label>
-                <input type="text" name="contact-1-type" id="contact-1-type" data-completion-type="contacts/type" list="contact-1-type-dl" oninput="invokeCompletion()" value="email" required>
-                <datalist id="contact-1-type-dl"></datalist>
-                <label for="contact-1-address">آدرس</label>
-                <input type="text" name="contact-1-address" id="contact-1-address" required>
-            </div>
-            <span onclick="addContactInput()" class="pointer plus-button">افزودن</span>
+            <span id="contact-add" onclick="addContactInput()" class="pointer plus-button">افزودن</span>
         </fieldset>
         <fieldset>
             <input type="button" value="ارسال">

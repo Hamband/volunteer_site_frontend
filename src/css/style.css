@@ -72,6 +72,11 @@ main {
 	}
 }
 
-input:invalid {
+input:user-invalid {
 	background-color: rgba(230, 0, 0, 0.2);
+}
+
+label[data-required]::after {
+	content: " *";
+	color: rgba(230, 0, 0, 0.7);
 }
