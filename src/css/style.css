@@ -71,3 +71,7 @@ main {
 		padding: 0.75em;
 	}
 }
+
+input:invalid {
+	background-color: rgba(230, 0, 0, 0.2);
+}

@@ -58,6 +58,7 @@ function addFieldInput() {
     newElI.setAttribute("oninput", "invokeCompletion()");
     newElI.name = "field-" + curIdx;
     newElI.id = "field-" + curIdx;
+    newElI.required = true;
 
 
     var newElD = document.createElement("datalist");
