@@ -56,7 +56,7 @@ function addFieldInput() {
     var newElI = document.createElement("input");
     newElI.type = "text";
     newElI.dataset["completionType"] = "fields";
-    newElI.setAttribute("onclick", "invokeCompletion()");
+    newElI.setAttribute("oninput", "invokeCompletion()");
     newElI.name = "field-" + curIdx;
     newElI.id = "field-" + curIdx;
 
