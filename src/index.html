@@ -22,13 +22,13 @@
 </section>
 <main>
     <form id="reg-form">
-        <fieldset>
+        <fieldset id="personal">
             <legend>مشخصات شما</legend>
             <label for="first_name" data-required="true">نام</label>
             <input type="text" name="first_name" id="first_name" placeholder="نام" autofocus required>
 
             <label for="last_name" data-required="true">نام خانوادگی</label>
-            <input type="text" name="last_name" id="last_name" placeholder="نام خانوادگی" autofocus required>
+            <input type="text" name="last_name" id="last_name" placeholder="نام خانوادگی" required>
 
             <label for="last_completed_degree">آخرین مدرک تحصیلی</label>
             <select name="last_completed_degree" id="last_completed_degree" required>
@@ -63,7 +63,7 @@
             <span id="contact-add" onclick="addContactInput()" class="pointer plus-button">افزودن</span>
         </fieldset>
         <fieldset>
-            <input type="button" value="ارسال">
+            <input type="button" value="ارسال" onclick="handleSubmitPress()">
         </fieldset>
     </form>
 </main>

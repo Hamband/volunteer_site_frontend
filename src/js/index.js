@@ -2,6 +2,7 @@ let baseUrl = "https://hamband.math.sharif.edu/volunteer/api/v1";
 let key = "mecaenizajocjutebyeckrewtaegckor";
 
 function performGetRequest(url, params) {
+    url = baseUrl + url;
     params["api_key"] = key;
     var target = new URL(url);
     target.search = new URLSearchParams(params).toString();
@@ -22,6 +23,29 @@ function performGetRequest(url, params) {
     });
 }
 
+function performPutRequest(url, data) {
+    url = baseUrl + url;
+    params = {};
+    params["api_key"] = key;
+    var target = new URL(url);
+    target.search = new URLSearchParams(params).toString();
+
+    return new Promise(function (resolve, reject) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("PUT", target, true);
+        xhttp.responseType = "json";
+        xhttp.onload = function() {
+            if (xhttp.status == 200) {
+                resolve(xhttp.response);
+            }
+            else {
+                reject(xhttp.status);
+            }
+        };
+        xhttp.send(data);
+    });
+}
+
 async function invokeCompletion() {
     var e = document.activeElement;
     if (e.tagName.toLowerCase() !== "input") {
@@ -30,7 +54,7 @@ async function invokeCompletion() {
     if (!"completionType" in e.dataset) {
         return;
     }
-    var queryUrl = baseUrl + "/get_completions/" + e.dataset["completionType"];
+    var queryUrl = "/get_completions/" + e.dataset["completionType"];
     var queryParams = {
         prefix: e.value,
         num: "10"
@@ -151,13 +175,13 @@ function addDegreeInput() {
     }
     {
     var l4 = document.createElement("label");
-    l4.setAttribute("for", "degree-" + curIdx + "-start");
+    l4.setAttribute("for", "degree-" + curIdx + "-start_year");
     l4.innerText = "سال شروع";
     l4.dataset["required"] = "true";
     var i4 = document.createElement("input");
     i4.type = "text";
-    i4.name = "degree-" + curIdx + "-start";
-    i4.id = "degree-" + curIdx + "-start";
+    i4.name = "degree-" + curIdx + "-start_year";
+    i4.id = "degree-" + curIdx + "-start_year";
     i4.required = true;
     i4.minLength = 4;
     i4.maxLength = 4;
@@ -168,13 +192,13 @@ function addDegreeInput() {
     }
     {
     var l5 = document.createElement("label");
-    l5.setAttribute("for", "degree-" + curIdx + "-end");
+    l5.setAttribute("for", "degree-" + curIdx + "-end_year");
     l5.innerText = "سال پایان (احتمالی)";
     l5.dataset["required"] = "true";
     var i5 = document.createElement("input");
     i5.type = "text";
-    i5.name = "degree-" + curIdx + "-end";
-    i5.id = "degree-" + curIdx + "-end";
+    i5.name = "degree-" + curIdx + "-end_year";
+    i5.id = "degree-" + curIdx + "-end_year";
     i5.required = true;
     i5.minLength = 4;
     i5.maxLength = 4;
@@ -257,7 +281,7 @@ function addContactInput() {
     document.getElementById("contact-add").before(d);
 }
 
-function removeDegreeInput(idx) {
+function removeContactInput(idx) {
     var el = document.getElementById("contact-" + idx + "-type").parentElement;
     el.parentElement.removeChild(el);
 }
@@ -266,6 +290,88 @@ function onLoad() {
     addFieldInput();
     addDegreeInput();
     addContactInput();
+}
+
+async function handleSubmitPress() {
+    document.documentElement.style.setProperty("--invalidInputColor", "rgba(230, 0, 0, 0.2)");
+    if (!document.getElementById("reg-form").checkValidity()) {
+        window.alert("لطفا مقدار فیلدها را به طور مناسب وارد کنید. فیلدهای مشکل‌دار، قرمز شده‌اند.");
+        return;
+    }
+    var jsonData = JSON.stringify(buildDataJson());
+    var queryUrl = "/new";
+    var response = await performPutRequest(queryUrl, jsonData);
+    if (response["status"] == "new_ok") {
+        handleSubmissionSuccess();
+    }
+    else {
+        handleSubmissionError();
+    }
+}
+
+function buildDataJson() {
+    var obj = getPersonalFSJson();
+    obj = appendFieldsJson(obj);
+    obj = appendDegreesJson(obj);
+    obj = appendContactsJson(obj);
+
+    return obj;
+}
+
+function getPersonalFSJson() {
+    var fs = document.querySelectorAll("#personal input, #personal select");
+    var obj = {};
+    for (var i = 0; i < fs.length; i++) {
+        obj[fs[i].name] = fs[i].value;
+        if (fs[i].value == "null") {
+            obj[fs[i].name] = null;
+        }
+    }
+    return obj;
+}
+
+function appendFieldsJson(obj) {
+    var fs = document.querySelectorAll("#fields input");
+    var fobj = [];
+    for (var i = 0; i < fs.length; i++) {
+        fobj.push(fs[i].value);
+    }
+    obj["fields"] = fobj;
+    return obj;
+}
+
+function appendDegreesJson(obj) {
+    var fs = document.querySelectorAll("#degrees div");
+    var fobj = [];
+    for (var i = 0; i < fs.length; i++) {
+        var tobj = {};
+        var fsd = fs[i];
+        var fsis = fsd.querySelectorAll("input, select");
+        for (var j = 0; j < fsis.length; j++) {
+            var item = fsis[j];
+            tobj[item.name.split("-")[2]] = item.value
+        }
+        fobj.push(tobj);
+    }
+    obj["degrees"] = fobj;
+    return obj;
+}
+
+function appendContactsJson(obj) {
+    var fs = document.querySelectorAll("#contacts div");
+    var fobj = [];
+    for (var i = 0; i < fs.length; i++) {
+        var tobj = {};
+        var fsd = fs[i];
+        var fsis = fsd.querySelectorAll("input, select");
+        for (var j = 0; j < fsis.length; j++) {
+            var item = fsis[j];
+            tobj[item.name.split("-")[2]] = item.value
+        }
+        fobj.push(tobj);
+    }
+    obj["contacts"] = fobj;
+    return obj;
 }
 
 onLoad();
