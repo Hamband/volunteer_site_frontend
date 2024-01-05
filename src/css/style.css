@@ -1,0 +1,55 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	direction: rtl;
+	min-height: 100%;
+}
+
+.header {
+	height: 3em;
+	position: relative;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.6);
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.header-main {
+	margin: auto;
+	color: rgb(225, 225, 225);
+}
+
+.vspacer-40 {
+	height: calc(40vh - 3em);
+}
+
+.red {
+	color: red;
+}
+
+main {
+	padding: 2em;
+}
+
+.transparent {
+	opacity: 0;
+}
+
+.nopointer {
+	cursor: default !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.plus-button {
+    background: url("../assets/plus.svg");
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    color: transparent;
+    user-select: none;
+    overflow: hidden;
+}
+
