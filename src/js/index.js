@@ -50,9 +50,13 @@ function addFieldInput() {
     var lastIdx = fs.dataset["lastIdx"];
     var curIdx = parseInt(lastIdx) + 1;
     fs.dataset["lastIdx"] = curIdx;
-    var el = document.getElementById("field-" + lastIdx);
+//    var el = document.getElementById("field-" + lastIdx);
     var newEl = document.createElement("div");
-    var newElI = el.cloneNode();
+
+    var newElI = document.createElement("input");
+    newElI.type = "text";
+    newElI.dataset["completionType"] = "fields";
+    newElI.setAttribute("onclick", "invokeCompletion()");
     newElI.name = "field-" + curIdx;
     newElI.id = "field-" + curIdx;
 
@@ -62,7 +66,25 @@ function addFieldInput() {
 
     newElI.setAttribute("list", "field-" + curIdx + "-dl");
 
+    var newElR = document.createElement("span");
+    newElR.classList.add("pointer");
+    newElR.classList.add("minus-button");
+    newElR.setAttribute("onclick", "removeFieldInput(" + curIdx + ")");
+    newElR.innerText = "حذف";
+
     newEl.appendChild(newElI);
     newEl.appendChild(newElD);
-    el.parentElement.after(newEl);
+    newEl.appendChild(newElR);
+    document.getElementById("field-add").before(newEl);
 }
+
+function removeFieldInput(idx) {
+    var el = document.getElementById("field-" + idx).parentElement;
+    el.parentElement.removeChild(el);
+}
+
+function onLoad() {
+    addFieldInput();
+}
+
+onLoad();

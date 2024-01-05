@@ -9,16 +9,18 @@
     <meta name="og:title" content="انجمن علمی همبند - ثبت مشخصات">
     <meta name="og:description" content="انجمن علمی همبند">
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
 <body>
-<script type="text/javascript" src="./js/index.js"></script>
+<script defer type="text/javascript" src="./js/index.js"></script>
 <section class="header">
     <p class="header-main">
         فرم ثبت مشخصات
     </p>
 </section>
 <main>
-    <!--    <div class="vspacer-40"></div>-->
     <form id="reg-form">
         <fieldset>
             <legend>مشخصات شما</legend>
@@ -47,13 +49,10 @@
                 <option value="PROF">استاد</option>
             </select>
         </fieldset>
-        <fieldset id="fields" data-last-idx="1">
+        <fieldset id="fields" data-last-idx="0">
             <legend>زمینه‌های تخصصی</legend>
-            <div>
-                <input type="text" name="field-1" id="field-1" data-completion-type="fields" list="field-1-dl" oninput="invokeCompletion()">
-                <datalist id="field-1-dl"></datalist>
-            </div>
-            <span onclick="addFieldInput()" class="pointer plus-button">افزودن</span>
+
+            <span id="field-add" onclick="addFieldInput()" class="pointer plus-button">افزودن</span>
         </fieldset>
         <fieldset id="degrees" data-last-idx="1">
             <legend>دوره‌های تحصیلی</legend>
@@ -73,8 +72,9 @@
                 <datalist id="degree-1-major-dl"></datalist>
                 <label for="degree-1-start">سال شروع</label>
                 <input type="text" inputmode="number" name="degree-1-start" id="degree-1-start" minlength="4" maxlength="4" required>
-                <label for="degree-1-end">سال پایان (یا سال پایان احتمالی)</label>
+                <label for="degree-1-end">سال پایان (احتمالی)</label>
                 <input type="text" inputmode="number" name="degree-1-end" id="degree-1-end" minlength="4" maxlength="4" required>
+                <span class="pointer minus-button" onclick="removeDegreeInput(1)">حذف</span>
             </div>
             <span onclick="addDegreeInput()" class="pointer plus-button">افزودن</span>
         </fieldset>
@@ -88,6 +88,10 @@
                 <input type="text" name="contact-1-address" id="contact-1-address" required>
             </div>
             <span onclick="addContactInput()" class="pointer plus-button">افزودن</span>
+        </fieldset>
+        <fieldset>
+            <input type="reset" value="پاک کردن">
+            <input type="button" value="ارسال">
         </fieldset>
     </form>
 </main>

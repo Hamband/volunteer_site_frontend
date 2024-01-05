@@ -43,13 +43,31 @@ main {
     cursor: pointer;
 }
 
-.plus-button {
-    background: url("../assets/plus.svg");
+.plus-button, .minus-button {
     width: 1em;
     height: 1em;
     display: inline-block;
     color: transparent;
     user-select: none;
     overflow: hidden;
+    vertical-align: middle;
 }
 
+.plus-button {
+    background: url("../assets/plus.svg");
+}
+
+.minus-button {
+    background: url("../assets/minus.svg");
+}
+
+@media screen and (max-width: 32em) {
+	input, label {
+		display: inline-block;
+		width: 80%;
+	}
+	#degrees div {
+		border: 1px solid black;
+		padding: 0.75em;
+	}
+}
