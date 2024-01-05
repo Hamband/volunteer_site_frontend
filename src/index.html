@@ -54,29 +54,9 @@
 
             <span id="field-add" onclick="addFieldInput()" class="pointer plus-button">افزودن</span>
         </fieldset>
-        <fieldset id="degrees" data-last-idx="1">
+        <fieldset id="degrees" data-last-idx="0">
             <legend>دوره‌های تحصیلی</legend>
-            <div>
-                <label for="degree-1-type"></label>
-                <select name="degree-1-type" id="degree-1-type" required>
-                    <option value="BACHELOR">کارشناسی</option>
-                    <option value="MASTER">کارشناسی ارشد</option>
-                    <option value="PHD">دکترا</option>
-                    <option value="POSTDOC">پسادکترا</option>
-                </select>
-                <label for="degree-1-uni">دانشگاه</label>
-                <input type="text" name="degree-1-uni" id="degree-1-uni" data-completion-type="degrees/uni" list="degree-1-uni-dl" oninput="invokeCompletion()" required>
-                <datalist id="degree-1-uni-dl"></datalist>
-                <label for="degree-1-major">رشته</label>
-                <input type="text" name="degree-1-major" id="degree-1-major" data-completion-type="degrees/major" list="degree-1-major-dl" oninput="invokeCompletion()" required>
-                <datalist id="degree-1-major-dl"></datalist>
-                <label for="degree-1-start">سال شروع</label>
-                <input type="text" inputmode="number" name="degree-1-start" id="degree-1-start" minlength="4" maxlength="4" required>
-                <label for="degree-1-end">سال پایان (احتمالی)</label>
-                <input type="text" inputmode="number" name="degree-1-end" id="degree-1-end" minlength="4" maxlength="4" required>
-                <span class="pointer minus-button" onclick="removeDegreeInput(1)">حذف</span>
-            </div>
-            <span onclick="addDegreeInput()" class="pointer plus-button">افزودن</span>
+            <span id="degree-add" onclick="addDegreeInput()" class="pointer plus-button">افزودن</span>
         </fieldset>
         <fieldset id="contacts" data-last-idx="1">
             <legend>راه‌های ارتباط</legend>
@@ -90,7 +70,6 @@
             <span onclick="addContactInput()" class="pointer plus-button">افزودن</span>
         </fieldset>
         <fieldset>
-            <input type="reset" value="پاک کردن">
             <input type="button" value="ارسال">
         </fieldset>
     </form>
