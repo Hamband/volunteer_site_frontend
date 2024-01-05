@@ -34,6 +34,7 @@ function performPutRequest(url, data) {
         var xhttp = new XMLHttpRequest();
         xhttp.open("PUT", target, true);
         xhttp.responseType = "json";
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhttp.onload = function() {
             if (xhttp.status == 200) {
                 resolve(xhttp.response);
