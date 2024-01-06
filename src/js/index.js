@@ -63,6 +63,9 @@ async function invokeCompletion() {
     var response = await performGetRequest(queryUrl, queryParams);
     var dl = document.getElementById(e.id + "-dl");
     dl.replaceChildren();
+    if (response.length == 1 && response[0] == e.value) {
+        return;
+    }
     for (var i = 0; i < response.length; i++) {
         var child = document.createElement("option");
         child.value = response[i];
