@@ -150,3 +150,16 @@ form input, form label {
 #submit {
     border: none;
 }
+
+#contacts input {
+	direction: ltr;
+}
+
+#success {
+	border-right: 0.5em solid lightgreen;
+	padding: 0.5em 1em 0.25em 1em;
+}
+
+#success p {
+	margin: 0;
+}
