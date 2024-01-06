@@ -312,8 +312,8 @@ async function handleSubmitPress() {
     }
     var jsonData = JSON.stringify(buildDataJson());
     var queryUrl = "/new";
-    var response = await performPutRequest(queryUrl, jsonData);
     try {
+        var response = await performPutRequest(queryUrl, jsonData);
         if (response["status"] == "new_ok") {
             handleSubmissionSuccess();
         }
@@ -358,7 +358,7 @@ function appendFieldsJson(obj) {
 }
 
 function appendDegreesJson(obj) {
-    var fs = document.querySelectorAll("#degrees div");
+    var fs = document.querySelectorAll("#degrees>div");
     var fobj = [];
     for (var i = 0; i < fs.length; i++) {
         var tobj = {};
@@ -375,7 +375,7 @@ function appendDegreesJson(obj) {
 }
 
 function appendContactsJson(obj) {
-    var fs = document.querySelectorAll("#contacts div");
+    var fs = document.querySelectorAll("#contacts>div");
     var fobj = [];
     for (var i = 0; i < fs.length; i++) {
         var tobj = {};
