@@ -154,7 +154,7 @@ form input, form label {
 	margin: 0.25em 0.25em;
 }
 
-#submit {
+#submit, #edit-submit, #delete-submit {
     border: none;
 }
 
