@@ -1,6 +1,8 @@
 let baseUrl = "https://hamband.math.sharif.edu/volunteer/api/v2";
 let key = "mecaenizajocjutebyeckrewtaegckor";
 
+var loadingInterval;
+
 function performDeleteRequest(url, params) {
     url = baseUrl + url;
     params["api_key"] = key;
@@ -57,7 +59,7 @@ async function onLoad() {
         var editKey = getSearchParam("edit_key");
         var queryUrl = "/delete";
         var queryParams = {
-            edit_key: editKey;
+            edit_key: editKey
         };
         try {
             var result = await performDeleteRequest(queryUrl, queryParams);
@@ -87,9 +89,18 @@ function handleSubmissionError() {
 }
 
 function enableLoading() {
+    document.getElementById("loading-indicator").classList.remove("hidden");
+    loadingInterval = setInterval(function() {
+        var t = document.getElementById("loading-dots").innerText;
+        t += "·";
+        t = t.replace("····", "·");
+        document.getElementById("loading-dots").innerText = t;
+    }, 800);
 }
 
 function disableLoading() {
+    clearInterval(loadingInterval);
+    document.getElementById("loading-indicator").classList.add("hidden");
 }
 
 onLoad();

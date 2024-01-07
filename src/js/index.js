@@ -1,5 +1,6 @@
 let baseUrl = "https://hamband.math.sharif.edu/volunteer/api/v2";
 let key = "mecaenizajocjutebyeckrewtaegckor";
+var loadingInterval;
 
 function performGetRequest(url, params) {
     url = baseUrl + url;
@@ -550,9 +551,20 @@ function populateContacts(contacts) {
 }
 
 function enableLoading() {
+    document.getElementById("reg-form").classList.add("hidden");
+    document.getElementById("loading-indicator").classList.remove("hidden");
+    loadingInterval = setInterval(function() {
+        var t = document.getElementById("loading-dots").innerText;
+        t += "·";
+        t = t.replace("····", "·");
+        document.getElementById("loading-dots").innerText = t;
+    }, 800);
 }
 
 function disableLoading() {
+    clearInterval(loadingInterval);
+    document.getElementById("loading-indicator").classList.add("hidden");
+    document.getElementById("reg-form").classList.remove("hidden");
 }
 
 onLoad();

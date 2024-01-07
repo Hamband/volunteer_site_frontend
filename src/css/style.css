@@ -185,9 +185,20 @@ textarea {
   flex-wrap: wrap;
   justify-content: center;
 }
+
 .flex-container span {
   flex-basis: content;
   margin: 0 2em;
   color: blue;
   color: LinkText;
+}
+
+#loading-indicator {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+#loading-dots::before {
+  content: "در حال بارگذاری ";
 }
