@@ -1,4 +1,4 @@
-let baseUrl = "https://hamband.math.sharif.edu/volunteer/api/v1";
+let baseUrl = "https://hamband.math.sharif.edu/volunteer/api/v2";
 let key = "mecaenizajocjutebyeckrewtaegckor";
 
 function performGetRequest(url, params) {
@@ -331,6 +331,7 @@ function buildDataJson() {
     obj = appendFieldsJson(obj);
     obj = appendDegreesJson(obj);
     obj = appendContactsJson(obj);
+    obj = appendMiscJson(obj);
 
     return obj;
 }
@@ -388,6 +389,12 @@ function appendContactsJson(obj) {
         fobj.push(tobj);
     }
     obj["contacts"] = fobj;
+    return obj;
+}
+
+function appendContactsJson(obj) {
+    var m = document.querySelector("#misc");
+    obj["misc"] = m.value;
     return obj;
 }
 
