@@ -47,6 +47,29 @@ function performPutRequest(url, data) {
     });
 }
 
+function performPutRequestWithUrlParams(url, params, data) {
+    url = baseUrl + url;
+    params["api_key"] = key;
+    var target = new URL(url);
+    target.search = new URLSearchParams(params).toString();
+
+    return new Promise(function (resolve, reject) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("PUT", target, true);
+        xhttp.responseType = "json";
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.onload = function() {
+            if (xhttp.status == 200) {
+                resolve(xhttp.response);
+            }
+            else {
+                reject(xhttp.status);
+            }
+        };
+        xhttp.send(data);
+    });
+}
+
 async function invokeCompletion() {
     var e = document.activeElement;
     if (e.tagName.toLowerCase() !== "input") {
@@ -298,10 +321,46 @@ function removeContactInput(idx) {
     el.parentElement.removeChild(el);
 }
 
+function getSearchParam(key) {
+    if (window.location.search == "" || window.location.search == "?") {
+        return null;
+    }
+    var list = window.location.search.split("?")[1].split("&");
+    for (var i = 0; i < list.length; i++) {
+        var item = list[i];
+        if (item == key) {
+            return "";
+        }
+        if (item.startsWith(key + "=")) {
+            return item.replace(key + "=", "");
+        }
+    }
+    return null;
+}
+
+function isEdit() {
+    var editKey = getSearchParam("edit_key");
+    if (editKey == null) {
+        return false;
+    }
+    if (editKey == "") {
+        window.alert("رمز ویرایش واردشده نادرست است. شما در حال هدایت شدن به فرم ثبت اطلاعات جدید هستید.");
+        window.location.search = "";
+        return false;
+    }
+    return true;
+}
+
 function onLoad() {
-    addFieldInput();
-    addDegreeInput();
-    addContactInput();
+    if (isEdit()) {
+        var editKey = getSearchParam("edit_key");
+        initializeEdit(editKey);
+    }
+    else {
+        addFieldInput();
+        addDegreeInput();
+        addContactInput();
+    }
 }
 
 async function handleSubmitPress() {
@@ -311,18 +370,35 @@ async function handleSubmitPress() {
         return;
     }
     var jsonData = JSON.stringify(buildDataJson());
-    var queryUrl = "/new";
-    try {
-        var response = await performPutRequest(queryUrl, jsonData);
-        if (response["status"] == "new_ok") {
-            handleSubmissionSuccess(response["edit_key"]);
+    if (isEdit()) {
+        var queryUrl = "/edit/edit";
+        var queryParams = {
+            edit_key: getSearchParam("edit_key")
+        };
+        try {
+            var response = await performPutRequestWithUrlParams(queryUrl, queryParams, jsonData);
+            if (response["status"] == "edit_ok") {
+                handleSubmissionSuccess(getSearchParam("edit_key"));
+            }
         }
-        else {
-            handleSubmissionError(response["status"]);
+        catch (e) {
+            handleSubmissionError(e);
         }
     }
-    catch (e) {
-        handleSubmissionError(e);
+    else {
+        var queryUrl = "/new";
+        try {
+            var response = await performPutRequest(queryUrl, jsonData);
+            if (response["status"] == "new_ok") {
+                handleSubmissionSuccess(response["edit_key"]);
+            }
+            else {
+                handleSubmissionError(response["status"]);
+            }
+        }
+        catch (e) {
+            handleSubmissionError(e);
+        }
     }
 }
 
@@ -411,6 +487,65 @@ function handleSubmissionSuccess(editKey) {
 
 function handleSubmissionError(msg) {
     window.alert("ثبت اطلاعات شما با خطا مواجه شد. اطلاعات شما ثبت نشده‌است. اگر از صحت آن‌ها مطمئنید، دوباره تلاش کنید. کد خطا: " + msg);
+}
+
+async function initializeEdit(editKey) {
+    enableLoading();
+    var data = await performGetRequest("/edit/get_initial", {edit_key: editKey});
+    populateData(data);
+    disableLoading();
+}
+
+function populateData(data) {
+    var personalFields = ["first_name", "last_name", "last_completed_degree", "current_degree", "misc"];
+    for (var i = 0; i < personalFields.length; i++) {
+        var fieldName = personalFields[i];
+        document.getElementById(fieldName).value = data[fieldName];
+    }
+    populateFields(data["fields"]);
+    populateDegrees(data["degrees"]);
+    populateContacts(data["contacts"]);
+}
+
+function populateFields(fields) {
+    for (var i = 0; i < fields.length; i++) {
+        var row = fields[i];
+        addFieldInput();
+        var idx = document.getElementById("fields").dataset["lastIdx"];
+        document.getElementById("field-" + idx).value = row;
+    }
+}
+
+function populateDegrees(degrees) {
+    var degreeKeys = ["type", "uni", "major", "start_year", "end_year"];
+    for (var i = 0; i < degrees.length; i++) {
+        var row = degrees[i];
+        addDegreeInput();
+        var idx = document.getElementById("degrees").dataset["lastIdx"];
+        for (var j = 0; j < degreeKeys.length; j++) {
+            var dk = degreeKeys[j];
+            document.getElementById("degree-" + idx + "-" + dk).value = row[dk];
+        }
+    }
+}
+
+function populateContacts(contacts) {
+    var contactKeys = ["type", "address"];
+    for (var i = 0; i < contacts.length; i++) {
+        var row = contacts[i];
+        addContactInput();
+        var idx = document.getElementById("contacts").dataset["lastIdx"];
+        for (var j = 0; j < contactKeys.length; j++) {
+            var ck = contactKeys[j];
+            document.getElementById("contact-" + idx + "-" + ck).value = row[ck];
+        }
+    }
+}
+
+function enableLoading() {
+}
+
+function disableLoading() {
 }
 
 onLoad();
