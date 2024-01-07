@@ -392,7 +392,7 @@ function appendContactsJson(obj) {
     return obj;
 }
 
-function appendContactsJson(obj) {
+function appendMiscJson(obj) {
     var m = document.querySelector("#misc");
     obj["misc"] = m.value;
     return obj;
