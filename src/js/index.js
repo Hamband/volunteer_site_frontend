@@ -492,6 +492,12 @@ function handleSubmissionError(msg) {
 async function initializeEdit(editKey) {
     enableLoading();
     var data = await performGetRequest("/edit/get_initial", {edit_key: editKey});
+    if ("msg" in data) {
+        disableLoading();
+        window.alert("رمز ویرایش واردشده نادرست است. شما در حال هدایت شدن به فرم ثبت اطلاعات جدید هستید.");
+        window.location.search = "";
+        return;
+    }
     populateData(data);
     disableLoading();
 }
