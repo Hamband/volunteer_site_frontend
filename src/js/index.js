@@ -499,6 +499,7 @@ async function initializeEdit(editKey) {
         return;
     }
     populateData(data);
+    document.getElementById("submit-button").value = "ویرایش";
     disableLoading();
 }
 
