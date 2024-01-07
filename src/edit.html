@@ -20,13 +20,28 @@
     </p>
 </section>
 <main>
+    <p>برای ویرایش اطلاعاتی که از قبل ثبت کرده‌اید، رمز ویرایش خود را وارد کرده و دکمه‌ی ویرایش را بزنید.</p>
+    <p>در صورتی که رمز ویرایش خود را فراموش کرده‌اید، از طریق راه‌های ارتباطی پایین صفحه با همبند در ارتباط باشید.</p>
     <form id="edit-form" method="get" action="./">
-        <fieldset id="key">
+        <fieldset id="edit-key">
             <label for="edit_key" data-required="true">رمز ویرایش</label>
             <input type="text" name="edit_key" id="edit_key" placeholder="رمز ویرایش" autofocus required>
         </fieldset>
-        <fieldset id="submit">
+        <fieldset id="edit-submit">
             <input type="submit" value="ویرایش">
+        </fieldset>
+    </form>
+    <p>برای حذف اطلاعاتی که از قبل ثبت کرده‌اید، رمز ویرایش خود را وارد کرده و دکمه‌ی حذف را بزنید. توجه: این عمل قابل بازگردانی نیست.</p>
+    <form id="delete-form" method="get" action="./delete.html">
+        <fieldset id="key">
+            <label for="edit_key" data-required="true">رمز ویرایش</label>
+            <input type="text" name="edit_key" id="delete_key" placeholder="رمز ویرایش" required>
+            <p></p>
+            <label for="delete-verify" data-required="true">آیا از حذف اطلاعات خود مطمئن هستید؟</label>
+            <input type="checkbox" name="delete-verify" id="delete-verify" required>
+        </fieldset>
+        <fieldset id="delete-submit">
+            <input type="submit" value="حذف">
         </fieldset>
     </form>
 </main>
@@ -42,7 +57,7 @@
     </p>
     <div class="flex-container">
         <span><a href="./privacy.html">سیاست حریم خصوصی</a></span>
-        <span><a href="./index.html">ثبت اطلاعات جدید</a></span>
+        <span><a href="./">ثبت اطلاعات جدید</a></span>
     </div>
 </section>
 </body>
