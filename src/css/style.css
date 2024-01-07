@@ -118,22 +118,22 @@ label[data-required]::after {
 .hidden {
     display: none !important;
 }
-.footer pre {
+.footer code {
     display: inline;
     margin: 0 0.25em;
-	  vertical-align: middle;
+	vertical-align: middle;
 }
 
 .footer {
 	margin: 0.5em;
-	color: rgba(0, 0, 0, 0.6);
+	// color: rgba(0, 0, 0, 0.9);
 	text-align: center;
 }
 
-.footer a {
-	text-decoration: none;
-	color: rgba(0, 0, 0, 0.75);
+a {
+    text-decoration: none;
 }
+
 .footer:before {
 	content: "";
 	width: 100%;
@@ -177,4 +177,17 @@ textarea {
     height: 6em;
     min-height: 4em;
     resize: vertical;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.flex-container span {
+  flex-basis: content;
+  margin: 0 2em;
+  color: blue;
+  color: LinkText;
 }
