@@ -167,7 +167,12 @@ form input, form label {
 	padding: 0.5em 1em 0.25em 1em;
 }
 
-#success p {
+#fail {
+	border-right: 0.5em solid red;
+	padding: 0.5em 1em 0.25em 1em;
+}
+
+#success p, #fail p {
 	margin: 0;
 }
 
