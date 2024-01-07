@@ -315,7 +315,7 @@ async function handleSubmitPress() {
     try {
         var response = await performPutRequest(queryUrl, jsonData);
         if (response["status"] == "new_ok") {
-            handleSubmissionSuccess();
+            handleSubmissionSuccess(response["edit_key"]);
         }
         else {
             handleSubmissionError(response["status"]);
@@ -398,9 +398,15 @@ function appendMiscJson(obj) {
     return obj;
 }
 
-function handleSubmissionSuccess() {
+function handleSubmissionSuccess(editKey) {
     document.getElementById("reg-form").classList.add("hidden");
     document.getElementById("success").classList.remove("hidden");
+    if (editKey != "") {
+        document.querySelector("#edit-key-container").innerText = editKey;
+    }
+    else {
+        document.querySelector("#edit-key-info").remove();
+    }
 }
 
 function handleSubmissionError(msg) {
