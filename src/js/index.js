@@ -282,6 +282,7 @@ function addContactInput() {
         i1.required = true;
         if (curIdx == 1) {
             i1.value = "email";
+            i1.readOnly = true;
         }
 
         var dl1 = document.createElement("datalist");
