@@ -221,6 +221,7 @@ function addDegreeInput() {
     i4.minLength = 4;
     i4.maxLength = 4;
     i4.pattern = "[0-9]{4}";
+    i4.title = i4.placeholder = "با ارقام انگلیسی وارد کنید.";
     i4.setAttribute("inputmode", "number");
 
     d.appendChild(l4);
@@ -239,6 +240,7 @@ function addDegreeInput() {
     i5.minLength = 4;
     i5.maxLength = 4;
     i5.pattern = "[0-9]{4}";
+    i5.title = i5.placeholder = "با ارقام انگلیسی وارد کنید.";
     i5.setAttribute("inputmode", "number");
 
     d.appendChild(l5);
