@@ -220,6 +220,7 @@ function addDegreeInput() {
     i4.required = true;
     i4.minLength = 4;
     i4.maxLength = 4;
+    i4.pattern = "[0-9]{4}";
     i4.setAttribute("inputmode", "number");
 
     d.appendChild(l4);
@@ -237,6 +238,7 @@ function addDegreeInput() {
     i5.required = true;
     i5.minLength = 4;
     i5.maxLength = 4;
+    i5.pattern = "[0-9]{4}";
     i5.setAttribute("inputmode", "number");
 
     d.appendChild(l5);
