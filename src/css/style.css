@@ -55,6 +55,10 @@ html, body {
 	min-height: 100%;
 }
 
+input {
+    font-size: 100%;
+}
+
 body {
     font-family: -apple-system, "Helvetica Neue" , Sahel, sans-serif;
 }
